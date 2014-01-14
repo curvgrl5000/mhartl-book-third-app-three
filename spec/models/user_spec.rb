@@ -12,21 +12,28 @@
 require 'spec_helper'
 
 describe User do
-  before { @user = User.new(name: "Example User", email: "user@example.com")  }
   
-  subject {  @user  }
+  before do 
+    @user = User.new(name: "Example User", email: "user@example.com")  # the instance var '@user' is equal to all the data colleected by ALL the hashes.
+  end
   
-  it { should respond_to(:name)  }
-  it { should respond_to(:email) }
-  it { should respond_to(:password_digest) }
-  it { should respond_to(:password) }
-  it { should respond_to(:password_confirmation) }
+  subject {  @user  }                 # the 'subject' method takes one argument, the instance var '@user'. Which means everything that '@user' represents
+                                      # gets convenietnly referred to as 'it' below. Consider the object of 'subject' as a living breathing thing, like a person. 
+                                      # A parallel analogy might be, she { should respond_to(:name) } Where subject = person, it = she.
+                                      
+  it { should respond_to(:name)  }                  # 'it' ( the data referenced from @user > subject > it ) should respond_to a name attribute 
+  it { should respond_to(:email) }                  # 'it' ( the data referenced from @user > subject > it ) should respond_to a email attribute
   
-  it { should be_valid }
+  it { should respond_to(:password_digest) }        # 'it' ( the data referenced from @user > subject > it ) should respond_to a password_digest attribute
+  it { should respond_to(:password) }               # 'it' ( the data referenced from @user > subject > it ) should respond_to a password attribute
+  it { should respond_to(:password_confirmation) }  # 'it' ( the data referenced from @user > subject > it ) should respond_to a password_confirmation attribute
+  it { should respond_to(:authenticate) }
   
-  describe "when name is not present" do
-    before { @user.name = " " }
-    it { should_not be_valid }
+  it { should be_valid }                            # a sanity check
+  
+  describe "when name is not present" do            # Sets up the default condition of a user's presence as it's being created in the lifecycle prior to saving
+    before { @user.name = " " }                     # Because of it's temperal condition, the condition of a record must be understaod in all spectrums of timing
+    it { should_not be_valid }                      # And this includes when a record is being created but has not yet been saved.
   end
   
   describe "when email is not present" do
@@ -35,8 +42,10 @@ describe User do
   end
   
   describe "when name is too long" do
-    before { should_not be_valid }
+    before { @user.name = "a" * 51 }
+    it { should_not be_valid }
   end
+  
   describe "when email format is invalid" do
     it "should be invalid" do
       addresses = %w[user@foo,com user_at_foo.org example.user@foo.
@@ -67,6 +76,7 @@ describe User do
     
     it { should_not be_valid }
   end
+  
   describe "when password is not present" do
     before { @user.password = @user.password_confirmation = " " }
     it { should_not be_valid }
@@ -99,7 +109,7 @@ describe User do
       let(:user_for_invalid_password) { found_user.authentication("invalid") }
       
       it { should_not == user_for_invalid_password }
-      specify { user_for_invalid_password.shoud be_false }
+      specify { user_for_invalid_password.should be_false }
     end
   end
 end
