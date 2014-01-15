@@ -14,7 +14,8 @@ require 'spec_helper'
 describe User do
   
   before do 
-    @user = User.new(name: "Example User", email: "user@example.com")  # the instance var '@user' is equal to all the data colleected by ALL the hashes.
+    @user = User.new(name: "Example User", email: "user@example.com",  # the instance var '@user' is equal to all the data colleected by ALL the hashes.
+                     password: "foobar", password_confirmation: "foobar")
   end
   
   subject {  @user  }                 # the 'subject' method takes one argument, the instance var '@user'. Which means everything that '@user' represents
@@ -70,7 +71,7 @@ describe User do
   describe "when email address is already taken" do
     before do
       user_with_same_email = @user.dup
-      user_with_same_email = @user.email.upcase
+      user_with_same_email.email = @user.email.upcase
       user_with_same_email.save
     end
     
@@ -106,7 +107,7 @@ describe User do
     end
     
     describe "with invalid password" do
-      let(:user_for_invalid_password) { found_user.authentication("invalid") }
+      let(:user_for_invalid_password) { found_user.authenticate("invalid") }
       
       it { should_not == user_for_invalid_password }
       specify { user_for_invalid_password.should be_false }
