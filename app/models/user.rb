@@ -19,7 +19,9 @@ class User < ActiveRecord::Base                                      # User clas
   attr_accessible :name, :email, :password, :password_confirmation   # Here we see that we create restricted access to the attributes with 'attr_accessor'
   has_secure_password
   
-  before_save { |user| user.email = email.downcase }
+  # before_save { |user| user.email = email.downcase }
+  before_save { email.downcase! }                                     # an alternate implementation of the 'before_save' callback 
+  
   
   validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
