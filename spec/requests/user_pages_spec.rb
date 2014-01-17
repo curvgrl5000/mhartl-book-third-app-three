@@ -10,6 +10,7 @@ describe "User pages" do
     
     it { should have_content(user.name) }
     it { should have_selector('h1', text: user.name) }
+    it { should have_selector('title', text: user.name) }
   end
   
   

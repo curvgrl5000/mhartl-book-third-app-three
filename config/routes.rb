@@ -1,5 +1,10 @@
 MhartlBookThirdAppAgain::Application.routes.draw do
-  resources :users
+  resources :users    # Here we are loading the resources ( the data ), in this case the USER data
+                      # And since this is the routes file, we are 'matching' the GET request from the
+                      # controller where @user is an instance of the class User and the returning value of the paramater
+                      # that is found, by the 'find' method. This accounts for how all members are found.
+                      # Basically 'resources :users, provides all the actions for a RESTful Users resource,
+                      # along with a large number of named routes for generationg user URIs. 
   root to: 'static_pages#home'
   match '/help',      to: 'static_pages#help'
   match '/about',     to: 'static_pages#about'
