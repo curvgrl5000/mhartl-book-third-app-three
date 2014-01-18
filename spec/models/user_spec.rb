@@ -29,6 +29,8 @@ describe User do
   it { should respond_to(:password) }               # 'it' ( the data referenced from @user > subject > it ) should respond_to a password attribute
   it { should respond_to(:password_confirmation) }  # 'it' ( the data referenced from @user > subject > it ) should respond_to a password_confirmation attribute
   it { should respond_to(:authenticate) }
+  it { should respond_to(:remember_token) }
+  
   
   it { should be_valid }                            # a sanity check
   
@@ -56,7 +58,7 @@ describe User do
         @user.should_not be_valid
       end
     end
-  end
+  end # describe "when email format is invalid" do
   
   describe "when email format is valid" do
     it "should be valid" do
@@ -66,7 +68,7 @@ describe User do
         @user.should be_valid
       end
     end
-  end
+  end # describe "when email format is valid" do
   
   describe "when email address is already taken" do
     before do
@@ -76,7 +78,7 @@ describe User do
     end
     
     it { should_not be_valid }
-  end
+  end # describe "when email address is already taken" do
   
   describe "email address with mixed case" do
     let(:mixed_case_email) { "Foo@ExAMPLE.CoM"} 
@@ -86,7 +88,7 @@ describe User do
       @user.save
       @user.reload.email.should == mixed_case_email.downcase
     end
-  end
+  end # describe "email address with mixed case" do
   
   describe "when password is not present" do
     before { @user.password = @user.password_confirmation = " " }
@@ -121,6 +123,12 @@ describe User do
       
       it { should_not == user_for_invalid_password }
       specify { user_for_invalid_password.should be_false }
-    end
+    end # end describe "with invalid password"
+  end   # end describe "return value of authentication method"
+  
+  describe "remember token" do                    # This method includes a callback, and will be inserted into the 
+    before { @user.save }                         # This callback ensures that the token changes every time the user updates his information
+    its(:remember_token)  { should_not be_blank } # Here we're adding the attribute, "remember_token" with the arg that it should not be blank
+                                                  # We are also using the 'its' method here, which applies the test to a given attribute vs. the subject of a test
   end
-end
+end     # end describe User do
