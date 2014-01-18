@@ -83,6 +83,11 @@ p {
   }
 }
 
+/* NAVIGATION */
+.container, .navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
+  padding: 5px 10px;
+  width: 95%;
+}
 
 /* FOOTER */
 footer {
