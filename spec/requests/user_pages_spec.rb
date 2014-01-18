@@ -50,7 +50,6 @@ describe "User pages" do
   end
 end
 
-
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # THIS IS ANOTHER WAY TO DO TEST THE CODE WITH FACTORY GIRL GEM: 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
