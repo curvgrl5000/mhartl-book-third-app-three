@@ -7,6 +7,10 @@ module SessionsHelper
     self.current_user = user    # this is un necessary due to the immediate redirect in the create action in the SessionsController
   end
   
+  def signed_in?
+    !current_user.nil?
+  end
+  
   def current_user=(user)  # This established how current_user is first called and identifyied frrom the datatbase
     @current_user = user
   end
