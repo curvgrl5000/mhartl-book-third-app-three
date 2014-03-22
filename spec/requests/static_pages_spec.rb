@@ -32,10 +32,17 @@ describe "Static pages" do
     let(:page_title) { '' }
   end
 
-  describe "Contact page" do
+  describe "Contacts page" do
     before {  visit contact_path  }
     let(:heading)    {  'Contact'  }
     let(:page_title) { '' }
+  end
+  
+  describe "Tutorials page" do
+    it "should have the content 'Tutorials' " do
+      visit '/static_pages/tutorials'
+      page.should have_content('Tutorials')
+    end
   end
   
   it "should have the right links on the layout" do
